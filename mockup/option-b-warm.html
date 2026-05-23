@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ManuReview — Option B · Warm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBF9F4;
+  --surface: #F5F1E8;
+  --surface-2: #EFEADC;
+  --paper: #FFFDF7;
+  --border: #E5DECB;
+  --border-strong: #D2C8AC;
+  --text: #2A2520;
+  --text-soft: #58504A;
+  --text-mute: #8C8377;
+  --accent: #A0522D;   /* warm sienna */
+  --accent-soft: #F4E6D6;
+  --green: #4F7A3C;
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans: "Inter", -apple-system, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app { max-width: 780px; margin: 0 auto; padding: 44px 32px 80px; }
+
+/* HEADER */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 34px; height: 34px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 17px;
+  font-style: italic;
+}
+.brand h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-soft);
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.status-pill .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(79,122,60,0.18);
+}
+
+/* Page heading */
+.hero { margin-bottom: 48px; }
+.hero h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+.hero p {
+  color: var(--text-soft);
+  font-size: 16.5px;
+  margin: 0;
+  max-width: 560px;
+}
+
+/* Section */
+.section { margin-bottom: 56px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section-head .num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+}
+.section-head h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.section-head .meta {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--text-mute);
+}
+
+/* Upload card */
+.upload-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  background: var(--paper);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.upload-card .file {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.upload-card .file-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  display: grid; place-items: center;
+  color: var(--accent);
+  font-size: 18px;
+}
+.upload-card .file-meta .name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 17px;
+}
+.upload-card .file-meta .info {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  margin-top: 4px;
+}
+
+/* Metrics */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.metric {
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+}
+.metric:last-child { border-right: 0; }
+.metric .k {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.metric .v {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.metric .v small {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--text-mute);
+  font-weight: 500;
+  margin-left: 3px;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.18s;
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); }
+.btn.primary:hover { background: #8B4423; border-color: #8B4423; }
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.btn.ghost:hover { background: var(--surface); color: var(--text); border-color: var(--text); }
+
+/* Models */
+.models { display: flex; flex-direction: column; gap: 10px; }
+.model {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.model:hover { border-color: var(--border-strong); }
+.model.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.model .score-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: grid; place-items: center;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.model.selected .score-circle {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+.model .body { min-width: 0; }
+.model .body .name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.model .body .by {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-mute);
+  margin-bottom: 8px;
+}
+.model .body .why {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.45;
+}
+.model .stats {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 6px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.model .stats .k { color: var(--text-mute); }
+.model .stats .v { color: var(--text); font-weight: 500; }
+
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.action-row .hint { color: var(--text-soft); font-size: 14px; }
+.action-row .hint strong { color: var(--text); font-weight: 600; }
+
+/* Generating */
+.generating {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  background: var(--paper);
+}
+.generating .row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.generating .phase {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.generating .stats {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  display: flex;
+  gap: 20px;
+}
+.generating .stats strong { color: var(--text); font-weight: 500; }
+.progress-track {
+  height: 3px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-track > i {
+  display: block;
+  height: 100%;
+  width: 62%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Review */
+.review-paper {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 44px;
+  position: relative;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 20px 40px -24px rgba(42,37,32,0.15);
+}
+.review-paper .verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #F4E6D6;
+  color: #8B4423;
+  margin-bottom: 18px;
+}
+.review-paper .verdict .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+}
+.review-paper h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+}
+.review-paper .by {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.review-paper .content {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.review-paper .content p { margin: 0 0 16px; }
+.review-paper .content h4 {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 32px 0 12px;
+}
+.review-paper .content h4:first-child { margin-top: 0; }
+.review-paper .content ul {
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+.review-paper .content li { margin-bottom: 8px; }
+.review-paper .content li::marker { color: var(--accent); }
+
+.colophon {
+  margin-top: 32px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.colophon .meta {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-mute);
+  line-height: 1.7;
+}
+.colophon .meta strong { color: var(--text); font-weight: 500; }
+.colophon .actions { display: flex; gap: 10px; }
+
+footer.foot {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-mute);
+}
+
+@media (max-width: 760px) {
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .metric { border-bottom: 1px solid var(--border); }
+  .metric:nth-child(2) { border-right: 0; }
+  .model { grid-template-columns: 48px 1fr; }
+  .model .stats { grid-column: 1 / -1; }
+  .review-paper { padding: 28px 24px; }
+  .colophon { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">m</div>
+      <h1>ManuReview</h1>
+    </div>
+    <div class="status-pill">
+      <span class="dot"></span>
+      Ollama connected · M2 Pro · 32GB
+    </div>
+  </div>
+
+  <div class="hero">
+    <h2>Pre-submission review, locally.</h2>
+    <p>Upload a manuscript. We'll score your installed models against your hardware, you pick one, and we generate a structured review you can hand back to the author.</p>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h3>Manuscript</h3>
+      <span class="meta">PDF · DOCX · TXT · MD · RTF</span>
+    </div>
+
+    <div class="upload-card">
+      <div class="file">
+        <div class="file-icon">¶</div>
+        <div class="file-meta">
+          <div class="name">fermi_pasta_ulam_revisited_v3.pdf</div>
+          <div class="info">182 KB · uploaded 14:22</div>
+        </div>
+      </div>
+      <button class="btn ghost">Replace</button>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="k">Words</div><div class="v">8,412</div></div>
+      <div class="metric"><div class="k">Est. tokens</div><div class="v">11,217</div></div>
+      <div class="metric"><div class="k">Sections</div><div class="v">7</div></div>
+      <div class="metric"><div class="k">Size</div><div class="v">182<small>KB</small></div></div>
+    </div>
+  </div>
+
+  <!-- MODELS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h3>Choose a reviewer</h3>
+      <span class="meta">4 models installed</span>
+    </div>
+
+    <div class="models">
+      <div class="model selected">
+        <div class="score-circle">94</div>
+        <div class="body">
+          <div class="name">Llama 3.1 8B Instruct</div>
+          <div class="by">meta · Q4_K_M · 4.7GB</div>
+          <div class="why">Strong all-round reviewer. Fits comfortably in memory with room for the full manuscript context.</div>
+        </div>
+        <div class="stats">
+          <span class="k">HW</span><span class="v">97</span>
+          <span class="k">CTX</span><span class="v">92</span>
+          <span class="k">QUAL</span><span class="v">91</span>
+          <span class="k">SPD</span><span class="v">88</span>
+        </div>
+      </div>
+
+      <div class="model">
+        <div class="score-circle">88</div>
+        <div class="body">
+          <div class="name">Mistral 7B Instruct v0.3</div>
+          <div class="by">mistral · Q5_K_M · 5.1GB</div>
+          <div class="why">Quick and direct. Tighter context window — will summarise long sections rather than quote them.</div>
+        </div>
+        <div class="stats">
+          <span class="k">HW</span><span class="v">95</span>
+          <span class="k">CTX</span><span class="v">78</span>
+          <span class="k">QUAL</span><span class="v">87</span>
+          <span class="k">SPD</span><span class="v">94</span>
+        </div>
+      </div>
+
+      <div class="model">
+        <div class="score-circle">82</div>
+        <div class="body">
+          <div class="name">Qwen 2.5 14B</div>
+          <div class="by">alibaba · Q4_K_M · 8.9GB</div>
+          <div class="why">Larger model. More literary, occasionally pedantic. Will run warm — expect 8–11 minutes for this manuscript.</div>
+        </div>
+        <div class="stats">
+          <span class="k">HW</span><span class="v">71</span>
+          <span class="k">CTX</span><span class="v">94</span>
+          <span class="k">QUAL</span><span class="v">92</span>
+          <span class="k">SPD</span><span class="v">61</span>
+        </div>
+      </div>
+
+      <div class="model">
+        <div class="score-circle">74</div>
+        <div class="body">
+          <div class="name">Phi 3 Mini 3.8B</div>
+          <div class="by">microsoft · Q4 · 2.3GB</div>
+          <div class="why">Compact and brisk. Good for a first pass before committing to a longer run.</div>
+        </div>
+        <div class="stats">
+          <span class="k">HW</span><span class="v">99</span>
+          <span class="k">CTX</span><span class="v">68</span>
+          <span class="k">QUAL</span><span class="v">72</span>
+          <span class="k">SPD</span><span class="v">96</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <div class="hint">Using <strong>Llama 3.1 8B Instruct</strong>, estimated <strong>3m 40s</strong> on this machine.</div>
+      <button class="btn primary">Generate review →</button>
+    </div>
+  </div>
+
+  <!-- GENERATING -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">—</span>
+      <h3>In progress</h3>
+    </div>
+
+    <div class="generating">
+      <div class="row1">
+        <div class="phase"><div class="spinner"></div>Composing review…</div>
+        <div class="stats">
+          <span>Elapsed <strong>2:14</strong></span>
+          <span>Tokens <strong>4,318</strong></span>
+          <span>Rate <strong>32 tok/s</strong></span>
+        </div>
+      </div>
+      <div class="progress-track"><i></i></div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h3>Review</h3>
+      <span class="meta">llama-3.1-8b · 3m 41s</span>
+    </div>
+
+    <div class="review-paper">
+      <div class="verdict"><span class="dot"></span>Not yet ready · revisions required</div>
+      <h2>On the Recurrence Times in a Fermi–Pasta–Ulam Lattice, Revisited</h2>
+      <div class="by">Reviewed by llama-3.1-8b-instruct · 23 May 2026 · 4,612 tokens</div>
+
+      <div class="content">
+
+        <h4>Summary</h4>
+        <p>The manuscript revisits a problem of considerable historical weight with sustained clarity. The argument is staged in seven sections, each with a working numerical experiment, and the supplementary code is unusually generous — a virtue the field too often forgets.</p>
+        <p>Three matters should be settled before submission. They are not individually fatal; together they delay readiness by perhaps a fortnight of revision.</p>
+
+        <h4>Strengths</h4>
+        <ul>
+          <li>Section 3's derivation is the clearest exposition of the soliton-mode argument in recent literature.</li>
+          <li>Numerical experiments are reproducible end-to-end; publishing the integrator settings is exemplary.</li>
+          <li>The KAM discussion is appropriately restrained.</li>
+        </ul>
+
+        <h4>Weaknesses</h4>
+        <ul>
+          <li><strong>The framing of "recurrence" is ambiguous</strong> between Sections 2 and 5 — finite-size artefact vs. physical recurrence. One paragraph in the introduction would close this.</li>
+          <li><strong>Figure 4 is unreadable at print scale.</strong> Four traces collapse into a single ink stroke; split into 2×2 panels, or thin the lines.</li>
+          <li><strong>Thin engagement with related work.</strong> Chen &amp; Loro (2024) and al-Hamadi (2025) speak directly to this regime and are not engaged.</li>
+        </ul>
+
+        <h4>Suggested revisions</h4>
+        <p>Begin with the framing paragraph — short, mechanical work. Replot Figure 4 in the same sitting. Set aside a half-day for the literature discussion. The conclusion needs one sentence on what would falsify the reading.</p>
+
+      </div>
+
+      <div class="colophon">
+        <div class="meta">
+          Reviewer: <strong>llama-3.1-8b-instruct</strong> · 4,612 / 11,217 tok<br>
+          Composed in <strong>3m 41s</strong> · entirely on this machine
+        </div>
+        <div class="actions">
+          <button class="btn ghost">Copy text</button>
+          <button class="btn ghost">Save as PDF</button>
+          <button class="btn">Download DOCX</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span>ManuReview · runs entirely on your machine</span>
+    <span>v0.1</span>
+  </footer>
+
+</div>
+</body>
+</html>

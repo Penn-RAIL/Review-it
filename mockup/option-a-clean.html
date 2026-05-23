@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ManuReview — Option A · Clean</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --surface-2: #f4f4f5;
+  --border: #e5e5e7;
+  --border-strong: #d4d4d8;
+  --text: #0a0a0b;
+  --text-soft: #52525b;
+  --text-mute: #8a8a93;
+  --accent: #2563eb;
+  --accent-soft: #eff4ff;
+  --green: #16a34a;
+  --amber: #d97706;
+  --sans: "Inter", -apple-system, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app { max-width: 1200px; margin: 0 auto; padding: 32px 36px 80px; }
+
+/* HEADER */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand .logo {
+  width: 28px; height: 28px;
+  background: var(--text);
+  color: white;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+.brand h1 { margin: 0; font-size: 15px; font-weight: 600; }
+.brand .sub { color: var(--text-mute); font-size: 13px; margin-left: 4px; }
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.status-pill .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+}
+
+/* Page heading */
+.page-title { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.page-sub { color: var(--text-soft); font-size: 15px; margin: 0 0 36px; }
+
+/* Steps */
+.steps {
+  display: flex;
+  gap: 0;
+  margin-bottom: 40px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.step {
+  flex: 1;
+  padding: 14px 18px;
+  border-right: 1px solid var(--border);
+  font-size: 13px;
+}
+.step:last-child { border-right: 0; }
+.step .n {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  display: block;
+  margin-bottom: 2px;
+}
+.step .label { font-weight: 500; color: var(--text-soft); }
+.step.done { background: white; }
+.step.done .label { color: var(--text); }
+.step.done .n { color: var(--green); }
+.step.active { background: white; }
+.step.active .label { color: var(--text); }
+.step.active .n { color: var(--accent); }
+
+/* Section block */
+.section { margin-bottom: 40px; }
+.section h2 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.section .desc {
+  font-size: 13px;
+  color: var(--text-mute);
+  margin: 0 0 16px;
+}
+
+/* Upload card */
+.upload-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: var(--bg);
+}
+.upload-card .file {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.upload-card .file-icon {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  display: grid; place-items: center;
+  color: var(--text-soft);
+}
+.upload-card .file-meta .name { font-weight: 500; font-size: 14px; }
+.upload-card .file-meta .info {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  margin-top: 2px;
+}
+
+/* Metrics row */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.metric {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: var(--bg);
+}
+.metric .k {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.metric .v {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.metric .v small {
+  font-size: 13px;
+  color: var(--text-mute);
+  font-weight: 500;
+  margin-left: 3px;
+}
+
+/* Button */
+.btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--text);
+  color: white;
+  border: 1px solid var(--text);
+  border-radius: 8px;
+  padding: 9px 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.88; }
+.btn.primary { background: var(--accent); border-color: var(--accent); }
+.btn.ghost { background: transparent; color: var(--text); }
+.btn.ghost:hover { background: var(--surface); }
+.btn .kbd {
+  font-family: var(--mono);
+  font-size: 11px;
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+/* Model list — clean rows */
+.models {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.model {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.model:last-child { border-bottom: 0; }
+.model:hover { background: var(--surface); }
+.model.selected { background: var(--accent-soft); }
+.model.selected .check {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.model .left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.model .check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  color: white;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+.model .info { min-width: 0; }
+.model .info .name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.model .info .tags {
+  display: flex;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mute);
+}
+.model .info .tags .tag {
+  padding: 1px 6px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  color: var(--text-soft);
+}
+.model .right { display: flex; align-items: center; gap: 24px; }
+.model .right .score {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.model .right .score .n {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.model .right .score .d {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-mute);
+}
+.model .right .bars {
+  display: grid;
+  grid-template-columns: repeat(4, 36px);
+  gap: 6px;
+}
+.model .right .bars .bar {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.model .right .bars .bar > i {
+  display: block;
+  height: 100%;
+  background: var(--text);
+  border-radius: 2px;
+}
+.model.selected .bars .bar > i { background: var(--accent); }
+.model .right .bar-labels {
+  display: grid;
+  grid-template-columns: repeat(4, 36px);
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.bars-wrap { text-align: center; }
+
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+.action-row .hint {
+  font-size: 13px;
+  color: var(--text-mute);
+}
+.action-row .hint strong { color: var(--text); font-weight: 500; }
+
+/* Generating */
+.generating {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--surface);
+}
+.generating .row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.generating .phase {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.generating .stats {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-mute);
+  display: flex;
+  gap: 16px;
+}
+.generating .stats strong { color: var(--text); font-weight: 500; }
+.progress-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-track > i {
+  display: block;
+  height: 100%;
+  width: 62%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* Review card */
+.review {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.review .head {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+}
+.review .head .title { font-weight: 600; font-size: 15px; }
+.review .head .meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-mute);
+}
+.review .body {
+  padding: 32px 36px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.review .body h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-mute);
+  font-weight: 600;
+  margin: 24px 0 8px;
+}
+.review .body h4:first-child { margin-top: 0; }
+.review .body p { margin: 0 0 12px; }
+.review .body ul { margin: 0 0 12px; padding-left: 20px; }
+.review .body li { margin-bottom: 6px; }
+.review .foot {
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  background: var(--surface);
+}
+.review .verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  margin-bottom: 12px;
+}
+.review .verdict .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+}
+
+footer.foot {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-mute);
+}
+
+@media (max-width: 760px) {
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .model { grid-template-columns: 1fr; }
+  .model .right { margin-top: 12px; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">M</div>
+      <h1>ManuReview</h1>
+      <span class="sub">/ local</span>
+    </div>
+    <div class="status-pill">
+      <span class="dot"></span>
+      Ollama · localhost:11434 · M2 Pro · 32GB
+    </div>
+  </div>
+
+  <h2 class="page-title">Review a manuscript</h2>
+  <p class="page-sub">Score your local models against this paper, pick a reviewer, get a structured pre-submission review back.</p>
+
+  <div class="steps">
+    <div class="step done"><span class="n">01</span><span class="label">✓ Upload</span></div>
+    <div class="step active"><span class="n">02</span><span class="label">Choose reviewer</span></div>
+    <div class="step"><span class="n">03</span><span class="label">Review</span></div>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="section">
+    <h2>Manuscript</h2>
+    <p class="desc">PDF, DOCX, TXT, Markdown, or RTF — up to 40MB.</p>
+
+    <div class="upload-card">
+      <div class="file">
+        <div class="file-icon">📄</div>
+        <div class="file-meta">
+          <div class="name">fermi_pasta_ulam_revisited_v3.pdf</div>
+          <div class="info">182 KB · uploaded 14:22</div>
+        </div>
+      </div>
+      <button class="btn ghost">Replace</button>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="k">Words</div><div class="v">8,412</div></div>
+      <div class="metric"><div class="k">Est. tokens</div><div class="v">11,217</div></div>
+      <div class="metric"><div class="k">Sections</div><div class="v">7</div></div>
+      <div class="metric"><div class="k">Size</div><div class="v">182<small>KB</small></div></div>
+    </div>
+  </div>
+
+  <!-- MODELS -->
+  <div class="section">
+    <h2>Available reviewers</h2>
+    <p class="desc">Scored against your hardware and manuscript size. Higher is better.</p>
+
+    <div class="models">
+      <div class="model selected">
+        <div class="left">
+          <div class="check">✓</div>
+          <div class="info">
+            <div class="name">Llama 3.1 8B Instruct</div>
+            <div class="tags"><span class="tag">meta</span><span class="tag">Q4_K_M</span><span class="tag">4.7GB</span></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="score"><span class="n">94</span><span class="d">/100</span></div>
+          <div class="bars-wrap">
+            <div class="bars">
+              <div class="bar"><i style="width:97%"></i></div>
+              <div class="bar"><i style="width:92%"></i></div>
+              <div class="bar"><i style="width:91%"></i></div>
+              <div class="bar"><i style="width:88%"></i></div>
+            </div>
+            <div class="bar-labels"><span>HW</span><span>CTX</span><span>QUAL</span><span>SPD</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="model">
+        <div class="left">
+          <div class="check"></div>
+          <div class="info">
+            <div class="name">Mistral 7B Instruct v0.3</div>
+            <div class="tags"><span class="tag">mistral</span><span class="tag">Q5_K_M</span><span class="tag">5.1GB</span></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="score"><span class="n">88</span><span class="d">/100</span></div>
+          <div class="bars-wrap">
+            <div class="bars">
+              <div class="bar"><i style="width:95%"></i></div>
+              <div class="bar"><i style="width:78%"></i></div>
+              <div class="bar"><i style="width:87%"></i></div>
+              <div class="bar"><i style="width:94%"></i></div>
+            </div>
+            <div class="bar-labels"><span>HW</span><span>CTX</span><span>QUAL</span><span>SPD</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="model">
+        <div class="left">
+          <div class="check"></div>
+          <div class="info">
+            <div class="name">Qwen 2.5 14B</div>
+            <div class="tags"><span class="tag">alibaba</span><span class="tag">Q4_K_M</span><span class="tag">8.9GB</span></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="score"><span class="n">82</span><span class="d">/100</span></div>
+          <div class="bars-wrap">
+            <div class="bars">
+              <div class="bar"><i style="width:71%"></i></div>
+              <div class="bar"><i style="width:94%"></i></div>
+              <div class="bar"><i style="width:92%"></i></div>
+              <div class="bar"><i style="width:61%"></i></div>
+            </div>
+            <div class="bar-labels"><span>HW</span><span>CTX</span><span>QUAL</span><span>SPD</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="model">
+        <div class="left">
+          <div class="check"></div>
+          <div class="info">
+            <div class="name">Phi 3 Mini 3.8B</div>
+            <div class="tags"><span class="tag">microsoft</span><span class="tag">Q4</span><span class="tag">2.3GB</span></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="score"><span class="n">74</span><span class="d">/100</span></div>
+          <div class="bars-wrap">
+            <div class="bars">
+              <div class="bar"><i style="width:99%"></i></div>
+              <div class="bar"><i style="width:68%"></i></div>
+              <div class="bar"><i style="width:72%"></i></div>
+              <div class="bar"><i style="width:96%"></i></div>
+            </div>
+            <div class="bar-labels"><span>HW</span><span>CTX</span><span>QUAL</span><span>SPD</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <div class="hint">Using <strong>Llama 3.1 8B Instruct</strong> · est. <strong>3m 40s</strong></div>
+      <button class="btn primary">Generate review →</button>
+    </div>
+  </div>
+
+  <!-- GENERATING -->
+  <div class="section">
+    <h2>Generating</h2>
+    <p class="desc">Live progress while your model works.</p>
+
+    <div class="generating">
+      <div class="row1">
+        <div class="phase"><div class="spinner"></div>Composing review…</div>
+        <div class="stats">
+          <span>Elapsed <strong>2:14</strong></span>
+          <span>Tokens <strong>4,318</strong></span>
+          <span>Rate <strong>32 tok/s</strong></span>
+        </div>
+      </div>
+      <div class="progress-track"><i></i></div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div class="section">
+    <h2>Review</h2>
+    <p class="desc">Generated by llama-3.1-8b in 3m 41s.</p>
+
+    <div class="review">
+      <div class="head">
+        <div class="title">Pre-submission review</div>
+        <div class="meta">llama-3.1-8b · 4,612 tok</div>
+      </div>
+      <div class="body">
+        <div class="verdict"><span class="dot"></span>Not yet ready — focused revision required</div>
+
+        <h4>Summary</h4>
+        <p>The manuscript revisits the Fermi–Pasta–Ulam problem with clarity and unusually generous supplementary code. Three matters should be addressed before submission to a tier-one journal.</p>
+
+        <h4>Strengths</h4>
+        <ul>
+          <li>Section 3's derivation is the clearest exposition of the soliton-mode argument in recent literature.</li>
+          <li>End-to-end reproducible numerical experiments with published integrator settings.</li>
+          <li>The KAM discussion is appropriately restrained.</li>
+        </ul>
+
+        <h4>Weaknesses</h4>
+        <ul>
+          <li><strong>Framing of "recurrence" is ambiguous</strong> between Sections 2 and 5 — finite-size artefact vs. physical recurrence. One clarifying paragraph in the introduction would close this.</li>
+          <li><strong>Figure 4 is unreadable at print scale.</strong> Four traces collapse to one stroke; split into 2×2 or thin the lines.</li>
+          <li><strong>Thin engagement with related work.</strong> Chen &amp; Loro 2024 and al-Hamadi 2025 speak directly to this regime.</li>
+        </ul>
+
+        <h4>Suggested revisions</h4>
+        <p>Begin with the framing paragraph — short, mechanical work. Replot Figure 4 in the same sitting. Set aside a half-day for the literature discussion. The conclusion needs one sentence on what would falsify the reading.</p>
+      </div>
+      <div class="foot">
+        <button class="btn ghost">Copy</button>
+        <button class="btn ghost">Print / PDF</button>
+        <button class="btn">Download DOCX</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span>ManuReview · runs entirely on your machine</span>
+    <span>v0.1</span>
+  </footer>
+
+</div>
+</body>
+</html>

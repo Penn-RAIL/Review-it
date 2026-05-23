@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ManuReview — Vol. I · No. 7 · 2026-05-23</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:        #F4EEE0;
+  --paper-deep:   #EBE3D2;
+  --paper-edge:   #DDD3BC;
+  --ink:          #1A1612;
+  --ink-soft:     #3A332B;
+  --ink-mute:     #6B6358;
+  --ink-faint:    #8E8674;
+  --rule:         #C7BCA6;
+  --rule-soft:    #D9CFB8;
+  --red:          #8B1A1A;
+  --red-deep:     #6B1212;
+  --serif:        "EB Garamond", "Adobe Caslon Pro", "Iowan Old Style", Georgia, serif;
+  --mono:         "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --col:          720px;
+  --gutter:       180px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #F8F2E4 0%, transparent 60%),
+    radial-gradient(900px 700px at 100% 30%, #EEE5D0 0%, transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.55;
+  font-feature-settings: "kern", "liga", "onum", "pnum";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-attachment: fixed;
+}
+
+/* Subtle paper grain overlay */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.085  0 0 0 0 0.07  0 0 0 0.045 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 64px 120px;
+}
+
+/* ---------- MASTHEAD ---------- */
+.masthead {
+  border-top: 7px solid var(--ink);
+  padding-top: 22px;
+  position: relative;
+}
+.masthead .top-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 14px;
+}
+.masthead .top-meta .price { color: var(--red); }
+.masthead h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(64px, 9vw, 124px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-feature-settings: "kern", "liga", "lnum";
+}
+.masthead h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--red);
+}
+.masthead .tagline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ink);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+.masthead .tagline .right {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ---------- STATUS COLOPHON STRIP ---------- */
+.status-strip {
+  margin: 18px 0 60px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.status-strip .item { display: inline-flex; align-items: center; gap: 8px; }
+.status-strip .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #1f8a3a;
+  box-shadow: 0 0 0 3px rgba(31,138,58,0.18);
+}
+.status-strip .item.warn .dot { background: #b87900; box-shadow: 0 0 0 3px rgba(184,121,0,0.18); }
+.status-strip .item strong { color: var(--ink); font-weight: 500; }
+
+/* ---------- SECTION SCAFFOLDING ---------- */
+section.issue {
+  display: grid;
+  grid-template-columns: var(--gutter) minmax(0, var(--col)) 1fr;
+  gap: 0;
+  margin-bottom: 80px;
+  position: relative;
+}
+section.issue .gutter {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 14px;
+  padding-right: 36px;
+  text-align: right;
+}
+section.issue .gutter .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  display: block;
+  color: var(--ink);
+  letter-spacing: 0;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+section.issue .body { min-width: 0; }
+
+section.issue h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 42px;
+  line-height: 1;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+section.issue h2 + .lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16.5px;
+  color: var(--ink-mute);
+  margin: 0 0 28px;
+  max-width: 560px;
+}
+
+/* ---------- SUBMISSION (drop zone + uploaded card) ---------- */
+.dropzone {
+  border: 1.5px dashed var(--rule);
+  background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0));
+  padding: 38px 36px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+.dropzone .text { font-style: italic; color: var(--ink-soft); font-size: 18px; line-height: 1.45; }
+.dropzone .text small {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 8px;
+}
+.btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 14px 22px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+.btn:hover { background: var(--red); border-color: var(--red); }
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+}
+.btn.ghost:hover { background: var(--ink); color: var(--paper); }
+.btn.red { background: var(--red); border-color: var(--red); }
+.btn.red:hover { background: var(--red-deep); border-color: var(--red-deep); }
+
+/* Manuscript profile card — minimal editorial table */
+.profile-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  margin-top: 4px;
+}
+.profile-card .cell {
+  padding: 18px 22px 18px 0;
+  border-right: 1px solid var(--rule-soft);
+}
+.profile-card .cell:last-child { border-right: 0; }
+.profile-card .cell .label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+}
+.profile-card .cell .value {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.profile-card .cell .value small {
+  font-size: 13px;
+  color: var(--ink-mute);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.file-line {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 18px;
+}
+.file-line strong { color: var(--ink); font-weight: 500; }
+
+/* ---------- REVIEWERS LIST ---------- */
+.reviewer {
+  display: grid;
+  grid-template-columns: 110px 1fr 220px;
+  gap: 28px;
+  padding: 28px 4px 28px 16px;
+  border-top: 1px solid var(--rule);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+.reviewer:last-child { border-bottom: 1px solid var(--rule); }
+.reviewer:hover { background: rgba(255,255,255,0.4); }
+.reviewer .score {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 76px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.reviewer .score sup {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-mute);
+  margin-left: 4px;
+  vertical-align: top;
+  position: relative;
+  top: 10px;
+}
+.reviewer .meta h3 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+.reviewer .meta .by {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 14px;
+}
+.reviewer .meta .recommendation {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16.5px;
+  color: var(--ink-soft);
+  max-width: 480px;
+  line-height: 1.45;
+}
+.reviewer .stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: start;
+  padding-top: 8px;
+  border-left: 1px solid var(--rule-soft);
+  padding-left: 22px;
+}
+.reviewer .stats .row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.reviewer .stats .row span:first-child { color: var(--ink-mute); }
+.reviewer .stats .row span:last-child { color: var(--ink); font-weight: 500; }
+.reviewer.selected {
+  background: rgba(139,26,26,0.04);
+}
+.reviewer.selected::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 28px;
+  bottom: 28px;
+  width: 3px;
+  background: var(--red);
+}
+.reviewer.selected .score { color: var(--red); }
+.reviewer .selected-mark {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
+.reviewer:not(.selected) .selected-mark { display: none; }
+
+.reviewers-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+.reviewers-foot .note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-mute);
+  max-width: 480px;
+}
+.reviewers-foot .note strong { color: var(--ink); font-style: normal; font-weight: 500; }
+
+/* ---------- GENERATING STATE ---------- */
+.pressroom {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding: 36px 0 32px;
+  position: relative;
+}
+.pressroom .phase-line {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 30px;
+  margin: 0 0 22px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.pressroom .phase-line .cursor {
+  display: inline-block;
+  width: 10px;
+  height: 26px;
+  background: var(--red);
+  vertical-align: -3px;
+  margin-left: 4px;
+  animation: blink 1.05s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.progress {
+  position: relative;
+  height: 2px;
+  background: var(--rule);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.progress .fill {
+  position: absolute; inset: 0 auto 0 0;
+  width: 64%;
+  background: linear-gradient(90deg, var(--ink) 0%, var(--red) 100%);
+}
+.progress .fill::after {
+  content: "";
+  position: absolute; right: 0; top: -1px; bottom: -1px; width: 40px;
+  background: linear-gradient(90deg, transparent, var(--red));
+  filter: blur(4px);
+  animation: bleed 2.5s ease-in-out infinite;
+}
+@keyframes bleed { 50% { opacity: 0.4; } }
+
+.phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.phases .phase {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 10px;
+  border-top: 1px solid var(--rule-soft);
+}
+.phases .phase.done { color: var(--ink); border-top-color: var(--ink); }
+.phases .phase.active { color: var(--red); border-top-color: var(--red); }
+.phases .phase .step {
+  display: block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: inherit;
+  margin-top: 4px;
+}
+
+.live-stats {
+  margin-top: 26px;
+  display: flex;
+  gap: 36px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.live-stats strong {
+  display: block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-transform: none;
+  margin-top: 4px;
+}
+
+/* ---------- THE REVIEW (finished editorial page) ---------- */
+.review-page {
+  background: #FAF6EC;
+  border: 1px solid var(--rule);
+  padding: 72px 88px;
+  position: relative;
+  box-shadow:
+    0 1px 0 #FFFCF3 inset,
+    0 30px 60px -30px rgba(26,22,18,0.18),
+    0 8px 20px -12px rgba(26,22,18,0.12);
+}
+.review-page::before {
+  content: "";
+  position: absolute; top: 18px; left: 18px; right: 18px; bottom: 18px;
+  border: 1px solid var(--rule-soft);
+  pointer-events: none;
+}
+.review-page .review-meta {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.review-page .review-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+}
+.review-page .review-byline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-mute);
+  margin-bottom: 40px;
+}
+.review-page .review-byline em {
+  color: var(--red);
+  font-style: italic;
+}
+
+.review-body {
+  font-size: 18.5px;
+  line-height: 1.62;
+  color: var(--ink);
+  hanging-punctuation: first last;
+}
+.review-body p { margin: 0 0 1.1em; }
+.review-body p.first::first-letter {
+  font-family: var(--serif);
+  font-weight: 500;
+  float: left;
+  font-size: 88px;
+  line-height: 0.85;
+  padding: 6px 12px 0 0;
+  color: var(--red);
+  font-feature-settings: "lnum";
+}
+.review-body h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 36px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-weight: 500;
+}
+.review-body h3 .roman {
+  color: var(--red);
+  margin-right: 12px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 16px;
+}
+.review-body blockquote {
+  margin: 24px 0 24px -28px;
+  padding: 2px 0 2px 24px;
+  border-left: 2px solid var(--red);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+.review-body ul {
+  margin: 12px 0 18px;
+  padding-left: 22px;
+  list-style: none;
+}
+.review-body ul li {
+  position: relative;
+  padding-left: 4px;
+  margin-bottom: 8px;
+}
+.review-body ul li::before {
+  content: "§";
+  position: absolute;
+  left: -22px;
+  color: var(--red);
+  font-style: italic;
+}
+
+.pull-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 40px -32px;
+  padding: 4px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 24px 0;
+  text-align: center;
+}
+.pull-quote::before, .pull-quote::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--red);
+  margin: 0 auto 14px;
+}
+.pull-quote::after { margin: 14px auto 0; }
+
+/* ---------- COLOPHON ---------- */
+.colophon {
+  margin-top: 32px;
+  border-top: 4px double var(--ink);
+  padding-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+.colophon h4 {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 16px;
+  font-weight: 500;
+}
+.colophon .meta-table {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.colophon .meta-table .row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--rule);
+  padding: 6px 0;
+}
+.colophon .meta-table .row span:first-child {
+  font-style: italic;
+  color: var(--ink-mute);
+}
+.colophon .meta-table .row span:last-child {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink);
+}
+.colophon .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.colophon .actions .btn { justify-content: space-between; }
+.colophon .actions .btn .meta {
+  font-size: 10px;
+  opacity: 0.55;
+  letter-spacing: 0.14em;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  margin-top: 100px;
+  padding-top: 22px;
+  border-top: 1px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+footer em {
+  font-family: var(--serif);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------- DIVIDER ORNAMENT ---------- */
+.ornament {
+  text-align: center;
+  margin: 80px auto;
+  color: var(--ink-faint);
+  font-family: var(--serif);
+  font-size: 22px;
+  letter-spacing: 1em;
+}
+
+/* small screens */
+@media (max-width: 980px) {
+  .page { padding: 32px 24px 80px; }
+  section.issue { grid-template-columns: 1fr; }
+  section.issue .gutter { text-align: left; padding-right: 0; padding-bottom: 12px; }
+  .reviewer { grid-template-columns: 1fr; }
+  .reviewer .stats { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule-soft); padding-top: 16px; }
+  .review-page { padding: 36px 28px; }
+  .pull-quote { margin: 32px 0; }
+  .colophon { grid-template-columns: 1fr; gap: 28px; }
+  .profile-card { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ========= MASTHEAD ========= -->
+  <header class="masthead">
+    <div class="top-meta">
+      <span>Vol. I · No. 7</span>
+      <span>Sat. 23 May · 2026</span>
+      <span class="price">Local Edition · Free</span>
+    </div>
+    <h1>Manu<em>Review</em></h1>
+    <div class="tagline">
+      <span>A local journal of pre-submission peer review, set by your own machine.</span>
+      <span class="right">Established 2026 · Offline by design</span>
+    </div>
+  </header>
+
+  <!-- ========= STATUS STRIP ========= -->
+  <div class="status-strip">
+    <span class="item"><span class="dot"></span><strong>Ollama</strong> · Connected</span>
+    <span class="item">Host · <strong>localhost:11434</strong></span>
+    <span class="item">Chip · <strong>Apple M2 Pro</strong></span>
+    <span class="item">Memory · <strong>32 GB unified</strong></span>
+    <span class="item">Models on file · <strong>7</strong></span>
+  </div>
+
+  <!-- ========= § I — SUBMISSION ========= -->
+  <section class="issue">
+    <aside class="gutter"><span class="num">§ I</span>Submission</aside>
+    <div class="body">
+      <h2>The Manuscript.</h2>
+      <p class="lede">Hand the paper to the desk. PDF, DOCX, TXT, Markdown, or RTF — set in any hand.</p>
+
+      <div class="dropzone">
+        <div class="text">
+          Drop a manuscript here, or browse the cabinet.
+          <small>Accepted · PDF · DOCX · TXT · MD · RTF — up to 40MB</small>
+        </div>
+        <button class="btn">Browse files →</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="cell">
+          <div class="label">Words</div>
+          <div class="value">8,412</div>
+        </div>
+        <div class="cell">
+          <div class="label">Est. tokens</div>
+          <div class="value">11,217</div>
+        </div>
+        <div class="cell">
+          <div class="label">Sections</div>
+          <div class="value">7</div>
+        </div>
+        <div class="cell">
+          <div class="label">On file</div>
+          <div class="value">182<small>KB</small></div>
+        </div>
+      </div>
+
+      <div class="file-line">Filed · <strong>fermi_pasta_ulam_revisited_v3.pdf</strong> · received 14:22 local</div>
+    </div>
+  </section>
+
+  <!-- ========= § II — THE REVIEWERS ========= -->
+  <section class="issue">
+    <aside class="gutter"><span class="num">§ II</span>The Reviewers</aside>
+    <div class="body">
+      <h2>Available Hands.</h2>
+      <p class="lede">Seven models reside on this machine. Scored against your manuscript and your hardware, in that order. Choose your reviewer.</p>
+
+      <div class="reviewers">
+
+        <div class="reviewer selected">
+          <div class="score">94<sup>/100</sup></div>
+          <div class="meta">
+            <h3>Llama 3.1 — 8B Instruct</h3>
+            <div class="by">Meta · Q4_K_M · 4.7GB on disk</div>
+            <p class="recommendation">Strong all-round reviewer. Fits comfortably in unified memory with room for the full manuscript context. Prose is measured, criticism specific.</p>
+          </div>
+          <div class="stats">
+            <div class="row"><span>Hardware fit</span><span>97</span></div>
+            <div class="row"><span>Context fit</span><span>92</span></div>
+            <div class="row"><span>Quality</span><span>91</span></div>
+            <div class="row"><span>Speed</span><span>88</span></div>
+          </div>
+          <div class="selected-mark">↳ Selected</div>
+        </div>
+
+        <div class="reviewer">
+          <div class="score">88<sup>/100</sup></div>
+          <div class="meta">
+            <h3>Mistral 7B — Instruct v0.3</h3>
+            <div class="by">Mistral · Q5_K_M · 5.1GB on disk</div>
+            <p class="recommendation">Quick and direct. Slightly tighter context window — will summarise long sections rather than quote them. Recommended if speed is the priority.</p>
+          </div>
+          <div class="stats">
+            <div class="row"><span>Hardware fit</span><span>95</span></div>
+            <div class="row"><span>Context fit</span><span>78</span></div>
+            <div class="row"><span>Quality</span><span>87</span></div>
+            <div class="row"><span>Speed</span><span>94</span></div>
+          </div>
+        </div>
+
+        <div class="reviewer">
+          <div class="score">82<sup>/100</sup></div>
+          <div class="meta">
+            <h3>Qwen 2.5 — 14B</h3>
+            <div class="by">Alibaba · Q4_K_M · 8.9GB on disk</div>
+            <p class="recommendation">A larger hand. More literary, occasionally pedantic. Will run warm — expect 8–11 minutes for this manuscript on your machine.</p>
+          </div>
+          <div class="stats">
+            <div class="row"><span>Hardware fit</span><span>71</span></div>
+            <div class="row"><span>Context fit</span><span>94</span></div>
+            <div class="row"><span>Quality</span><span>92</span></div>
+            <div class="row"><span>Speed</span><span>61</span></div>
+          </div>
+        </div>
+
+        <div class="reviewer">
+          <div class="score">74<sup>/100</sup></div>
+          <div class="meta">
+            <h3>Phi 3 — Mini 3.8B</h3>
+            <div class="by">Microsoft · Q4 · 2.3GB on disk</div>
+            <p class="recommendation">Compact and brisk. Good for a first pass or a sanity check before committing to a longer run with one of the larger reviewers above.</p>
+          </div>
+          <div class="stats">
+            <div class="row"><span>Hardware fit</span><span>99</span></div>
+            <div class="row"><span>Context fit</span><span>68</span></div>
+            <div class="row"><span>Quality</span><span>72</span></div>
+            <div class="row"><span>Speed</span><span>96</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="reviewers-foot">
+        <div class="note">Reading <strong>Llama 3.1 — 8B Instruct</strong>. Estimated time on this machine: <strong>3m 40s</strong>.</div>
+        <button class="btn red">Commission the review →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament">❦</div>
+
+  <!-- ========= § III — THE PRESSROOM (generating) ========= -->
+  <section class="issue">
+    <aside class="gutter"><span class="num">§ III</span>In Press</aside>
+    <div class="body">
+      <h2>The review is being set.</h2>
+      <p class="lede">A quiet pressroom. Type is being chosen, paragraphs composed, then printed onto this page.</p>
+
+      <div class="pressroom">
+        <p class="phase-line">Composing the review<span class="cursor"></span></p>
+
+        <div class="progress"><div class="fill"></div></div>
+
+        <div class="phases">
+          <div class="phase done">01 · <span class="step">Read manuscript</span></div>
+          <div class="phase done">02 · <span class="step">Consult reviewer</span></div>
+          <div class="phase active">03 · <span class="step">Compose review</span></div>
+          <div class="phase">04 · <span class="step">Set type</span></div>
+        </div>
+
+        <div class="live-stats">
+          <div>Elapsed<strong>2m 14s</strong></div>
+          <div>Tokens<strong>4,318</strong></div>
+          <div>Rate<strong>32 tok/s</strong></div>
+          <div>Reviewer<strong>llama-3.1-8b</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament">❦</div>
+
+  <!-- ========= § IV — THE REVIEW (finished) ========= -->
+  <section class="issue">
+    <aside class="gutter"><span class="num">§ IV</span>The Review</aside>
+    <div class="body">
+
+      <div class="review-page">
+        <div class="review-meta">
+          <span>Issue No. 7 · Pre-submission</span>
+          <span>llama-3.1-8b · 3m 41s · 4,612 tok</span>
+        </div>
+
+        <h2 class="review-title">On the Recurrence Times in a Fermi–Pasta–Ulam Lattice, Revisited.</h2>
+        <p class="review-byline">A peer review of the manuscript by <em>llama-3.1-8b-instruct</em>, set locally on 23 May 2026.</p>
+
+        <div class="review-body">
+
+          <p class="first">The manuscript revisits a problem of considerable historical weight, and does so with a clarity of purpose that is, for the most part, sustained. The argument is staged in seven sections, each marked by a working numerical experiment, and the author is unusually generous with the supplementary code — a virtue the field too often forgets.</p>
+
+          <p>There are, however, three matters that should be settled before submission. They are not, individually, fatal; together, they delay the paper's readiness by perhaps a fortnight of revision.</p>
+
+          <h3><span class="roman">i.</span> Readiness for submission</h3>
+          <p>The paper is <em>not yet ready</em> for submission to a tier-one journal, though it is close. A focused revision targeting the three matters below should bring it to a defensible state. The figures, in particular, are presently doing more work than the prose admits.</p>
+
+          <blockquote>“The author treats the recurrence as both an artefact of finite-size and as a physical recurrence. The reader needs to be told which, and where.”</blockquote>
+
+          <h3><span class="roman">ii.</span> Strengths</h3>
+          <ul>
+            <li>Section 3's derivation is the clearest exposition of the soliton-mode argument I have read in some years.</li>
+            <li>The numerical experiments are reproducible end-to-end; the choice to publish the integrator settings is exemplary.</li>
+            <li>The closing remark on the relationship to KAM theory is restrained where it could easily have over-reached.</li>
+          </ul>
+
+          <h3><span class="roman">iii.</span> Weaknesses, in order of importance</h3>
+          <ul>
+            <li><strong>The framing of the recurrence is ambiguous.</strong> Sections 2 and 5 use the word in two distinct senses — see the blockquote above. A single paragraph in the introduction would close this.</li>
+            <li><strong>Figure 4 is unreadable at print scale.</strong> The four traces collapse into one ink stroke; consider splitting into a 2×2 panel, or thinning the lines and re-colouring with accessible palette.</li>
+            <li><strong>The discussion of related work is thin.</strong> Two papers from the last eighteen months (Chen &amp; Loro 2024; al-Hamadi 2025) speak directly to the regime studied here and are not engaged.</li>
+          </ul>
+
+          <div class="pull-quote">“Close to publishable, but the paper currently asks the reader to do work the author has not.”</div>
+
+          <h3><span class="roman">iv.</span> Suggested revisions</h3>
+          <p>Begin with the framing paragraph. It is short, mechanical work, and clears the way for the rest. Replot Figure 4 in the same sitting. Set the literature aside for a dedicated half-day; engage the two omitted papers in the discussion, not the introduction. The conclusion needs one extra sentence — what would falsify your reading?</p>
+
+          <h3><span class="roman">v.</span> A closing note</h3>
+          <p>The manuscript is the product of a careful mind. The criticisms above are offered in that spirit: a paper this close to ready deserves a reviewer who reads it twice.</p>
+
+        </div>
+
+        <div class="colophon">
+          <div>
+            <h4>Colophon</h4>
+            <div class="meta-table">
+              <div class="row"><span>Reviewer</span><span>llama-3.1-8b-instruct</span></div>
+              <div class="row"><span>Set in</span><span>EB Garamond · JetBrains Mono</span></div>
+              <div class="row"><span>Composed in</span><span>3m 41s · local</span></div>
+              <div class="row"><span>Tokens</span><span>4,612 out · 11,217 in</span></div>
+              <div class="row"><span>Issued</span><span>2026-05-23 14:31</span></div>
+            </div>
+          </div>
+          <div>
+            <h4>Take it with you</h4>
+            <div class="actions">
+              <a class="btn" href="#">Download · DOCX <span class="meta">42 KB</span></a>
+              <a class="btn ghost" href="#">Print or Save as PDF <span class="meta">⌘ P</span></a>
+              <a class="btn ghost" href="#">Copy review to clipboard <span class="meta">plain text</span></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>ManuReview · Local Edition</span>
+    <em>Set and printed on your own machine. No copy was sent elsewhere.</em>
+    <span>Issue 0007 · ⌘</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
