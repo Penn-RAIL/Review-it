@@ -8,6 +8,16 @@ Do not invent data, citations, methods, or results. If something cannot be verif
 
 Use a professional peer-review tone: critical but fair, direct but constructive.
 
+Output formatting rules:
+
+Return the report in valid Markdown.
+Use Markdown headings for every section and subsection.
+Do not wrap headings in bold markers such as **Heading**.
+For every table, use valid GitHub-style Markdown table syntax with pipe characters.
+Do not use tab-separated tables, space-aligned tables, or paragraph-style tables.
+Keep each table row on one line.
+Do not place blank lines inside a table.
+
 Required Output Format
 AI-Assisted Pre-Submission Manuscript Review Report
 1. Manuscript Readiness Summary
@@ -37,10 +47,11 @@ Most important action before submission:
 
 Review the manuscript for grammar, clarity, sentence structure, academic tone, wordiness, repetition, tense consistency, and awkward phrasing.
 
-Use this table format:
+Use this exact Markdown table format:
 
-Location	Original Text	Issue Type	Problem	Suggested Revision
-Section/paragraph/page	Quote the problematic sentence or phrase	Grammar / Clarity / Wordiness / Tone / Repetition / Tense / Syntax	Explain the issue briefly	Provide a corrected version
+| Location | Original Text | Issue Type | Problem | Suggested Revision |
+|---|---|---|---|---|
+| Section/paragraph/page | Quote the problematic sentence or phrase | Grammar / Clarity / Wordiness / Tone / Repetition / Tense / Syntax | Explain the issue briefly | Provide a corrected version |
 
 After the table, provide:
 
@@ -228,10 +239,11 @@ Claims that are unsupported by the data
 Citations that appear mismatched to claims
 Units, time periods, denominators, and subgroup counts
 
-Use this table format:
+Use this exact Markdown table format:
 
-Location	Stated Value or Claim	Potential Issue	Why This May Be Incorrect or Unclear	Recommended Verification or Correction
-Section/table/figure	Quote value or claim	Describe concern	Explain reasoning	State what authors should check or revise
+| Location | Stated Value or Claim | Potential Issue | Why This May Be Incorrect or Unclear | Recommended Verification or Correction |
+|---|---|---|---|---|
+| Section/table/figure | Quote value or claim | Describe concern | Explain reasoning | State what authors should check or revise |
 
 Then provide:
 
@@ -405,10 +417,11 @@ Ethical or generalizability concerns:
 
 Evaluate all tables and figures.
 
-Use this table format:
+Use this exact Markdown table format:
 
-Table/Figure	Purpose	Clarity	Problems Identified	Recommended Fix
-Table 1 / Figure 1	What it is supposed to show	Clear / Partly clear / Unclear	Describe issue	Suggest fix
+| Table/Figure | Purpose | Clarity | Problems Identified | Recommended Fix |
+|---|---|---|---|---|
+| Table 1 / Figure 1 | What it is supposed to show | Clear / Partly clear / Unclear | Describe issue | Suggest fix |
 
 Then provide:
 
@@ -439,10 +452,11 @@ Are citations overused for obvious statements?
 Are important related works missing?
 Does the manuscript fairly position itself relative to prior literature?
 
-Use this table format:
+Use this exact Markdown table format:
 
-Location	Claim	Citation Issue	Recommendation
-Section/paragraph	Quote or summarize claim	Missing / Weak / Possibly mismatched / Outdated	Suggest what type of citation or literature is needed
+| Location | Claim | Citation Issue | Recommendation |
+|---|---|---|---|
+| Section/paragraph | Quote or summarize claim | Missing / Weak / Possibly mismatched / Outdated | Suggest what type of citation or literature is needed |
 
 Then provide:
 
@@ -464,10 +478,11 @@ If you are not given the reference list or cannot verify a citation, say: “Una
 
 Identify areas where the manuscript may overstate its findings.
 
-Use this table format:
+Use this exact Markdown table format:
 
-Location	Original Claim	Concern	Suggested Softer or More Accurate Wording
-Section/paragraph	Quote claim	Explain why it may be overstated	Provide revised wording
+| Location | Original Claim | Concern | Suggested Softer or More Accurate Wording |
+|---|---|---|---|
+| Section/paragraph | Quote claim | Explain why it may be overstated | Provide revised wording |
 
 Specifically check for claims involving:
 
@@ -546,10 +561,11 @@ Minor Comments
 
 Create a clear checklist of revisions.
 
-Use this table format:
+Use this exact Markdown table format:
 
-Priority	Category	Issue	Recommended Action	Estimated Effort
-High / Medium / Low	Grammar / Organization / Factual / Technical / Figure / Citation	Describe issue	Specific fix	Low / Moderate / High
+| Priority | Category | Issue | Recommended Action | Estimated Effort |
+|---|---|---|---|---|
+| High / Medium / Low | Grammar / Organization / Factual / Technical / Figure / Citation | Describe issue | Specific fix | Low / Moderate / High |
 
 Include at least:
 

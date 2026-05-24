@@ -4,20 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "PORT=9091 node server/index.js",
+    "dev": "npm run build && python3 -m review_it.cli --no-browser",
     "build": "vite build",
-    "build:package": "vite build && python -m build",
-    "start": "PORT=9091 NODE_ENV=production node server/index.js"
+    "build:package": "npm run build && python3 -m build",
+    "start": "python3 -m review_it.cli"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",
-    "docx": "^9.5.1",
     "docx-preview": "^0.3.6",
-    "express": "^4.19.2",
     "lucide-react": "^0.468.0",
-    "mammoth": "^1.8.0",
-    "multer": "^2.0.2",
-    "pdf-parse": "^1.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vite": "^6.0.0"

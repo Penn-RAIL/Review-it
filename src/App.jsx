@@ -13,6 +13,7 @@ import {
   Sparkles,
   Upload,
 } from "lucide-react";
+import logoUrl from "./assets/logo.png";
 
 const formatNumber = (value) => (Number.isFinite(value) ? value.toLocaleString() : "Unknown");
 
@@ -133,10 +134,10 @@ export default function App() {
     <main className="app-shell">
       <aside className="sidebar">
         <div className="brand-block">
-          <div className="brand-mark">MR</div>
+          <img className="brand-mark" src={logoUrl} alt="review-it" />
           <div>
-            <h1>ManuReview</h1>
-            <p>Local manuscript review with Ollama</p>
+            <h1>review-it</h1>
+            <p>Local manuscript review</p>
           </div>
         </div>
 
@@ -144,7 +145,7 @@ export default function App() {
 
         <nav className="steps" aria-label="Workflow">
           <Step active={!inspection} done={Boolean(inspection)} label="Upload" />
-          <Step active={Boolean(inspection && !report)} done={Boolean(report)} label="Select model" />
+          <Step active={Boolean(inspection && !report)} done={Boolean(report)} label="Review setup" />
           <Step active={Boolean(report)} done={Boolean(report)} label="Report" />
         </nav>
 
@@ -154,8 +155,8 @@ export default function App() {
       <section className="workspace">
         <header className="workspace-header">
           <div>
-            <p className="eyebrow">Local decision support</p>
-            <h2>Review a manuscript and choose the model that fits the machine.</h2>
+            <p className="eyebrow">Manuscript review</p>
+            <h2>Generate a structured pre-submission review from a manuscript.</h2>
           </div>
           <button className="icon-button" onClick={() => window.location.reload()} title="Start over">
             <RefreshCw size={18} />
@@ -182,7 +183,7 @@ export default function App() {
             </label>
             <button className="primary-button" disabled={status === "inspecting"}>
               {status === "inspecting" ? <Loader2 className="spin" size={18} /> : <Gauge size={18} />}
-              Inspect and score models
+              Analyze manuscript
             </button>
           </form>
         </section>
@@ -202,8 +203,8 @@ export default function App() {
             <div className="model-table-wrap">
               <div className="section-heading">
                 <div>
-                  <h3>Available Ollama Models</h3>
-                  <p>Ranked against detected memory, estimated model footprint, and manuscript size.</p>
+                  <h3>Review Setup</h3>
+                  <p>Choose an installed Ollama model. Recommendations use the manuscript size and detected memory.</p>
                 </div>
                 <button
                   className="primary-button compact"
@@ -211,7 +212,7 @@ export default function App() {
                   disabled={!selectedModel || status === "generating"}
                 >
                   {status === "generating" ? <Loader2 className="spin" size={18} /> : <FileText size={18} />}
-                  Generate DOCX
+                  Generate review
                 </button>
               </div>
 
@@ -265,7 +266,7 @@ export default function App() {
             <div className="section-heading">
               <div>
                 <h3>DOCX Preview</h3>
-                <p>Rendered from the generated Word document.</p>
+                <p>Structured review report rendered from the generated Word document.</p>
               </div>
               <a className="download-button" href={report.docxUrl}>
                 <Download size={18} />

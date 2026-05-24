@@ -1,13 +1,28 @@
 [build-system]
-requires = ["setuptools>=69", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "review-it"
 version = "0.1.0"
-description = "Local manuscript review UI powered by Ollama"
+description = "Local manuscript reviewer powered by Ollama"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+  { name = "Ebubechukwu D Enwerem", email = "ebube198@gmail.com" },
+  { name = "Satvik Tripathi", email = "satvikt@upenn.edu" }
+]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = [
+  "ollama",
+  "local-llm",
+  "manuscript",
+  "peer-review",
+  "academic-writing",
+  "docx",
+  "fastapi"
+]
 dependencies = [
   "fastapi>=0.115.0",
   "uvicorn[standard]>=0.30.0",

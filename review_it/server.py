@@ -100,6 +100,7 @@ async def create_report(request: ReportRequest) -> dict:
         "reportId": report["id"],
         "html": report["html"],
         "markdown": report["markdown"],
+        "rawMarkdown": report["rawMarkdown"],
         "metadata": report["metadata"],
         "docxUrl": f"/api/reports/{report['id']}/docx",
     }

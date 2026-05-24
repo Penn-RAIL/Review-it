@@ -1,4 +1,6 @@
-# Review It
+# review-it
+
+![review-it logo](src/assets/logo.png)
 
 Local manuscript review tool powered by Ollama.
 
@@ -6,14 +8,14 @@ Local manuscript review tool powered by Ollama.
 
 - Upload a PDF, DOCX, TXT, Markdown, or RTF manuscript.
 - Detect local machine memory and basic GPU/system profile.
-- Query installed Ollama models.
-- Score available models against hardware fit and manuscript size.
 - Run a fixed pre-submission peer-review prompt on the manuscript.
 - Generate a DOCX report and render it in the app for download.
+- Recommend installed Ollama models based on detected memory and manuscript size.
 
 ## Requirements
 
-- Node.js 20+
+- Python 3.10+
+- Node.js 20+ for building the frontend during development or before publishing
 - Ollama running locally at `http://localhost:11434`
 - At least one pulled Ollama model, for example:
 
@@ -23,7 +25,7 @@ ollama pull llama3.1:8b
 
 ## Run
 
-### Pip package mode
+### Local Python package mode
 
 Build the frontend once, then install the Python package locally:
 
@@ -48,16 +50,17 @@ review-it --no-browser
 review-it --ollama-url http://localhost:11434
 ```
 
-### Node development mode
+### Development mode
 
 ```bash
 npm install
+python3 -m pip install -e .
 npm run dev
 ```
 
 Open `http://localhost:9091`.
 
-In development, the frontend and backend run together on one port:
+In development, `npm run dev` rebuilds the React frontend and launches the Python/FastAPI backend. The frontend and API are served together on one port:
 
 - App and API: `http://localhost:9091`
 
@@ -67,4 +70,54 @@ If Ollama is running somewhere else, set:
 OLLAMA_URL=http://localhost:11434 npm run dev
 ```
 
-The Node development backend writes generated report files to `generated/`.
+Generated report files are written to `~/.review-it/reports/`.
+
+## Publishing To PyPI
+
+Before publishing, confirm the package name `review-it` is available or already owned by the project maintainers on PyPI and TestPyPI.
+
+1. Create accounts on PyPI and TestPyPI.
+2. Create API tokens for both accounts.
+3. Build the frontend assets that get bundled into the Python package:
+
+```bash
+npm install
+npm run build
+```
+
+4. Build the Python source distribution and wheel:
+
+```bash
+python -m pip install build twine
+python -m build
+```
+
+5. Upload to TestPyPI first:
+
+```bash
+python -m twine upload --repository testpypi dist/*
+```
+
+6. Test the TestPyPI install in a clean virtual environment:
+
+```bash
+python -m venv /tmp/review-it-test
+source /tmp/review-it-test/bin/activate
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple review-it
+review-it
+```
+
+7. If the TestPyPI install works, upload to PyPI:
+
+```bash
+python -m twine upload dist/*
+```
+
+After the PyPI upload, users can install and run:
+
+```bash
+pip install review-it
+review-it
+```
+
+For each new release, update `version` in `pyproject.toml`, rebuild the frontend, rebuild the package, and upload the new artifacts. PyPI does not allow replacing an existing version.
