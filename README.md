@@ -72,6 +72,22 @@ OLLAMA_URL=http://localhost:11434 npm run dev
 
 Generated report files are written to `~/.review-it/reports/`.
 
+## Quick install from PyPI
+
+Install and run in one minute:
+
+```bash
+python -m pip install --upgrade review-it
+review-it
+```
+
+If you prefer isolated app installs, use `pipx`:
+
+```bash
+pipx install review-it
+review-it
+```
+
 ## Publishing To PyPI
 
 Before publishing, confirm the package name `review-it` is available or already owned by the project maintainers on PyPI and TestPyPI.
@@ -118,6 +134,8 @@ After the PyPI upload, users can install and run:
 ```bash
 pip install review-it
 review-it
+# or
+python -m review_it
 ```
 
 For each new release, update `version` in `pyproject.toml`, rebuild the frontend, rebuild the package, and upload the new artifacts. PyPI does not allow replacing an existing version.
